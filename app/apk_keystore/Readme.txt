@@ -1,0 +1,19 @@
+
+Black November
+
+Bnr
+
+
+ca-app-pub-4346653435295459/7368215831
+
+
+Int
+
+ca-app-pub-4346653435295459/7535613086
+
+Rvid
+
+
+ca-app-pub-4346653435295459/1924317463
+
+Firebase all

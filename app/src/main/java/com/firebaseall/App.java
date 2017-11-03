@@ -122,6 +122,8 @@ public class App extends Application {
 
     public static String OP_LOGOUT = "Logout";
 
+    public static String adsAppBnrId = "ca-app-pub-4346653435295459/7368215831";
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
