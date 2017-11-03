@@ -58,7 +58,7 @@ public class DashboardActivity extends AppCompatActivity
         new AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.JSON)
                 .setUpdateFrom(UpdateFrom.GITHUB)
-                .setUpdateJSON("https://raw.githubusercontent.com/prashant31191/FirebaseAndroid/master/FirebaseAll/app/update-changelog.json")
+                .setUpdateJSON("https://raw.githubusercontent.com/prashant31191/FirebaseAll/master/app/update-changelog.json")
                 .start();
 
         AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
