@@ -9,6 +9,8 @@
     <!-- -
         This is an ad unit ID for an interstitial test ad. Replace with your own interstitial ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638
+
+
     <!- -->
     <string name="interstitial_ad_unit_id">ca-app-pub-5194219019183767/7217469763</string>
     <string name="banner_ad_unit_id">ca-app-pub-5194219019183767/8594841057</string>
