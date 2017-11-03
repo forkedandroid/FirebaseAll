@@ -109,7 +109,7 @@ public class ActAds extends AppCompatActivity {
     private void loadInterstitial() {
         // Disable the next level button and load the ad.
         mNextLevelButton.setEnabled(false);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("EE1BDC1EA6BCB4E0FF6820D8F3A232D1")
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("asdasd")
                 //When you testing on emulator
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
 
