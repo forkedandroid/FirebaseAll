@@ -4,18 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/grey_100"
 
     tools:context="com.chat.ChatActivity">
 
     <RelativeLayout
         android:id="@+id/test"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-
-        android:background="#30000000"
         android:gravity="center"
         android:minHeight="10dp" />
 
@@ -25,15 +22,14 @@
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_below="@+id/test"
-        android:layout_above="@+id/linearLayout"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin" />
+        android:layout_above="@+id/linearLayout" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
-        android:alpha="0.05"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.03"
         android:background="#fff">
 
         <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -48,6 +44,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="5dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -69,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:enabled="false"
+            android:drawableRight="@drawable/ic_send_black_24dp"
             android:text="SEND" />
 
     </LinearLayout>

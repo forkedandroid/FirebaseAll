@@ -74,7 +74,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setPhoto(String url) {
-        GlideUtil.loadImage(url, mPhotoView);
+        GlideUtil.loadImagePost(url, mPhotoView);
     }
 
     public void setIcon(String url, final String authorId) {
@@ -145,7 +145,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
 
     public void setLikeStatus(LikeStatus status, Context context) {
         mLikeIcon.setImageDrawable(ContextCompat.getDrawable(context,
-                status == LikeStatus.LIKED ? R.drawable.heart_full : R.drawable.heart_empty));
+                status == LikeStatus.LIKED ? R.drawable.ic_favorite_black_36dp : R.drawable.ic_favorite_border_black_24dp));
     }
 
 

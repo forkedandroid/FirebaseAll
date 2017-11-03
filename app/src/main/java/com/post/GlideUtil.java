@@ -35,6 +35,16 @@ public class GlideUtil {
                 .into(imageView);
     }
 
+    public static void loadImagePost(String url, ImageView imageView) {
+        Context context = imageView.getContext();
+        ColorDrawable cd = new ColorDrawable(ContextCompat.getColor(context, R.color.grey_300));
+        Glide.with(context)
+                .load(url)
+                .placeholder(cd)
+                .crossFade()
+                .into(imageView);
+    }
+
     public static void loadProfileIcon(String url, ImageView imageView) {
         Context context = imageView.getContext();
         Glide.with(context)
