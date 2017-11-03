@@ -55,18 +55,22 @@ public class DashboardActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        new AppUpdater(this)
+      /*  new AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.GITHUB)
+                .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
                 .setUpdateFrom(UpdateFrom.JSON)
                 .setUpdateJSON("https://raw.githubusercontent.com/prashant31191/FirebaseAll/master/app/update-changelog.json")
-                .start();
+                .start();*/
 
         AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
 
-                /*.setUpdateFrom(UpdateFrom.AMAZON)
+                .setUpdateFrom(UpdateFrom.AMAZON)
                 .setUpdateFrom(UpdateFrom.GITHUB)
-                .setGitHubUserAndRepo("javiersantos", "AppUpdater")
-*/
+                .setUpdateFrom(UpdateFrom.JSON)
+                .setUpdateJSON("https://raw.githubusercontent.com/prashant31191/FirebaseAll/master/app/update-changelog.json")
+                .setGitHubUserAndRepo("prashant31191", "FirebaseAll")
+                .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
+
                 .withListener(new AppUpdaterUtils.UpdateListener() {
                     @Override
                     public void onSuccess(Update update, Boolean isUpdateAvailable) {
