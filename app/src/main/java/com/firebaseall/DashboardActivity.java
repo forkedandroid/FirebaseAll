@@ -56,8 +56,8 @@ public class DashboardActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         new AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.JSON)
                 .setUpdateFrom(UpdateFrom.GITHUB)
+                .setUpdateFrom(UpdateFrom.JSON)
                 .setUpdateJSON("https://raw.githubusercontent.com/prashant31191/FirebaseAll/master/app/update-changelog.json")
                 .start();
 
