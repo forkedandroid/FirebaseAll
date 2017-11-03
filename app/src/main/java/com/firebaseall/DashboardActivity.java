@@ -65,11 +65,11 @@ public class DashboardActivity extends AppCompatActivity
         AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
 
                 .setUpdateFrom(UpdateFrom.AMAZON)
+                .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
                 .setUpdateFrom(UpdateFrom.GITHUB)
                 .setUpdateFrom(UpdateFrom.JSON)
                 .setUpdateJSON("https://raw.githubusercontent.com/prashant31191/FirebaseAll/master/app/update-changelog.json")
                 .setGitHubUserAndRepo("prashant31191", "FirebaseAll")
-                .setUpdateFrom(UpdateFrom.GOOGLE_PLAY)
 
                 .withListener(new AppUpdaterUtils.UpdateListener() {
                     @Override
