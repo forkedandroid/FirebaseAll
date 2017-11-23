@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/menu_1"
+        android:icon="@drawable/ic_pages_black_24dp" />
+
+    <item
+        android:title="@string/menu_2"
+        android:icon="@drawable/ic_sms_black_24dp" />
+
+    <item
+        android:title="@string/menu_3"
+        android:icon="@drawable/ic_settings_black_24dp" />
+
+    <item
+        android:title="@string/menu_4"
+        android:icon="@drawable/ic_person_black_24dp" />
+
+    <item
+        android:title="@string/menu_5"
+        android:icon="@drawable/ic_map_black_24dp" />
+
+</menu>

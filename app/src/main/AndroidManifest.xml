@@ -130,7 +130,18 @@
             android:name="com.post.UserDetailActivity"
             android:label="@string/title_activity_user_detail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.post.BaseActivity"></activity>
+
+        <activity android:name="com.post.BaseActivity"/>
+
+
+
+        <activity
+            android:name="com.demos.ActBottomBar"
+            android:label="@string/title_activity_user_detail"
+            android:theme="@style/AppTheme_bottombar" />
+
+
+
 
     </application>
 
