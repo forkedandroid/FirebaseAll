@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.firebaseall.R;
@@ -20,6 +21,10 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+
         swichFragment(getIntent());
     }
 
@@ -28,6 +33,9 @@ public class ContentActivity extends AppCompatActivity {
         int fragmentKey = intent.getIntExtra(Constants.KEY_FRAGMENT,0);
 
         fragmentKey = Constants.ROOM_FRAGMENT;
+        fragmentKey = Constants.WEB_FRAGMENT;
+
+
         switch (fragmentKey){
             case Constants.ROOM_FRAGMENT:
                 //replaceFragment(AboutFragment.newInstance(intent.getStringExtra(Constants.KEY_UID)));
@@ -43,7 +51,7 @@ public class ContentActivity extends AppCompatActivity {
             }case Constants.WEB_FRAGMENT: {
                 String title = intent.getStringExtra(Constants.KEY_TITLE);
                 String url = intent.getStringExtra(Constants.KEY_URL);
-                replaceFragment(AboutFragment.newInstance(url, title));
+                replaceFragment(LoginFragment.newInstance(title, url));
                 break;
             }case Constants.LOGIN_FRAGMENT:
                 replaceFragment(AboutFragment.newInstance());
@@ -71,7 +79,6 @@ public class ContentActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(@IdRes int id, Fragment fragment) {
-
         getSupportFragmentManager().beginTransaction().replace(id, fragment).commit();
     }
 
