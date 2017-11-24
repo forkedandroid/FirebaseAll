@@ -42,4 +42,11 @@
         <item name="tab_5">#F63D2B</item>
     </array>
 
+
+
+
+    <color name="title_bg_color">#F63D2B</color>
+    <color name="line_bg">#8B6B62</color>
+    <color name="third_party_text_color">#00886A</color>
+
 </resources>

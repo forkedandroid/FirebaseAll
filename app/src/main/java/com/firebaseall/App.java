@@ -64,7 +64,8 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Response;
 
-public class App extends Application {
+public class App extends com.demos.fragment.App {
+//public class App extends Application {
 
    
     private static App mInstance;

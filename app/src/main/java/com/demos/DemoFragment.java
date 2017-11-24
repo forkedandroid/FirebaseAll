@@ -48,7 +48,7 @@ public class DemoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (getArguments().getInt("index", 0) == 3) {
+        if (getArguments().getInt("index", 0) == 2) {
             View view = inflater.inflate(R.layout.fragment_demo_settings, container, false);
             initDemoSettings(view);
             return view;

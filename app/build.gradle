@@ -13,6 +13,8 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+//apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'io.fabric'
 
 android {
@@ -28,9 +30,9 @@ android {
 
         // Enabling multidex support.
         multiDexEnabled true
-      /*  jackOptions {
-            enabled true
-        }*/
+        /*  jackOptions {
+              enabled true
+          }*/
     }
 
 
@@ -51,7 +53,41 @@ android {
         lintOptions {
             abortOnError false
         }
+    }
+    flavorDimensions "api", "mode"
+    productFlavors {
+        demo {
+            dimension "mode"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "demo"
+        }
+        full {
+            dimension "mode"
+            applicationIdSuffix ".full"
+            versionNameSuffix "full"
+        }
+      /*  minApi24 {
+            dimension "api"
+            minSdkVersion 24
+            versionCode 500 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi24"
+        }*/
+        minApi21 {
+            dimension "api"
+            minSdkVersion 21
+            applicationIdSuffix ".full21"
+            versionCode 100  + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi21"
+        }
+    }
 
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        // To check for a certain build type, use variant.buildType.name == "<buildType>"
+        if (names.contains("minApi21") && names.contains("demo")) {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
     }
 }
 
@@ -60,6 +96,7 @@ repositories {
     // You can also use jcenter if you prefer
     mavenCentral()
 }
+
 
 
 dependencies {
@@ -95,10 +132,19 @@ dependencies {
     /*for the menu drawer*/
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-
     // retrofit, gson
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+
+/*    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'*/
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+
+    compile 'com.king.base:base:2.0'
+    //maven { url 'https://dl.bintray.com/jenly/maven' } --https://github.com/prashant31191/FlutteringLayout
+    // compile 'com.king.view:flutteringlayout:1.1.0'
+
 
     /*Crashlytics gradle*/
     compile('com.crashlytics.sdk.android:crashlytics:2.6.7@aar') {
@@ -130,6 +176,24 @@ dependencies {
     //https://github.com/prashant31191/ahbottomnavigation
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
+
+    // for inject dependency injector framework
+    compile 'com.google.dagger:dagger:2.9'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.9'
+    //apt 'com.google.dagger:dagger-compiler:2.9'
+
+
+    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
+    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
+
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //database
+    compile 'org.greenrobot:greendao:3.2.0'
+    provided 'org.greenrobot:greendao-generator:3.2.0'
+
+    compile 'com.android.support:multidex:1.0.1'
+
     /*
     // Testing dependencies
     androidTestCompile 'junit:junit:4.12'
@@ -149,7 +213,6 @@ dependencies {
 */
 
 }
-
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
         def requested = details.requested
