@@ -15,10 +15,6 @@ import com.king.base.util.SystemUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * @author Jenly <a href="mailto:jenly1314@gmail.com">Jenly</a>
- * @since 2017/3/21
- */
 
 public class LoginFragment extends SimpleFragment {
 
