@@ -50,11 +50,11 @@
     <color name="third_party_text_color">#00886A</color>
 
 
-    <color name="clr_txt_brown">#6C4A42</color>
-    <color name="clr_txt_trBlack50">#806C4A42</color>
+    <color name="clr_txt_brown">#111111</color>
+    <color name="clr_txt_trBlack50">#80111111</color>
 
-    <color name="clrBtnBrownUnpress">#3C2A32</color>
-    <color name="clrBtnBrownPress">#803C2A32</color>
+    <color name="clrBtnBrownUnpress">#111111</color>
+    <color name="clrBtnBrownPress">#80111111</color>
 
     <color name="clrBtnWhiteUnpress">#FFFFFF</color>
     <color name="clrBtnWhitePress">#80FFFFFF</color>
@@ -63,7 +63,7 @@
     <color name="clrBtnBlackPress">#80000000</color>
 
     <color name="clrEtDisableUnderLine">#00886A</color>
-    <color name="clrEtPrimaryLineText">#F63D2B</color>
+    <color name="clrEtPrimaryLineText">@color/colorPrimaryDark</color>
 
     <color name="clr_divider_gray">#e3e3e3</color>
     <color name="clrTheme">@color/colorPrimary</color>
@@ -75,9 +75,9 @@
     <color name="clrtext_press">@color/clr_divider_gray</color>
 
 
-    <color name="clrEtHint">#5C5A52</color>
-    <color name="clrEtText">#6C4A42</color>
-    <color name="clrFabBg">#F63D2B</color>
+    <color name="clrEtHint">#CC0000</color>
+    <color name="clrEtText">#111111</color>
+    <color name="clrFabBg">@color/colorPrimary</color>
 
 
     <color name="tr50White">#80FFFFFF</color>

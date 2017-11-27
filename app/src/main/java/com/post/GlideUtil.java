@@ -20,38 +20,57 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebaseall.R;
 
 public class GlideUtil {
     public static void loadImage(String url, ImageView imageView) {
         Context context = imageView.getContext();
         ColorDrawable cd = new ColorDrawable(ContextCompat.getColor(context, R.color.blue_grey_500));
-        Glide.with(context)
+      /*  Glide.with(context)
                 .load(url)
                 .placeholder(cd)
                 .crossFade()
                 .centerCrop()
+                .into(imageView);*/
+
+        Glide.with(context)
+                .load(url)
+                //.apply(new RequestOptions().override(100, 100).placeholder(R.drawable.bg_image).error(R.drawable.bg_image))
+                .apply(new RequestOptions().placeholder(cd).error(cd))
                 .into(imageView);
     }
 
     public static void loadImagePost(String url, ImageView imageView) {
         Context context = imageView.getContext();
         ColorDrawable cd = new ColorDrawable(ContextCompat.getColor(context, R.color.grey_300));
-        Glide.with(context)
+        /*Glide.with(context)
                 .load(url)
                 .placeholder(cd)
                 .crossFade()
+                .into(imageView);*/
+
+        Glide.with(context)
+                .load(url)
+                //.apply(new RequestOptions().override(100, 100).placeholder(R.drawable.bg_image).error(R.drawable.bg_image))
+                .apply(new RequestOptions().placeholder(cd).error(cd))
                 .into(imageView);
     }
 
     public static void loadProfileIcon(String url, ImageView imageView) {
         Context context = imageView.getContext();
-        Glide.with(context)
+       /* Glide.with(context)
                 .load(url)
                 .placeholder(R.drawable.ic_person_outline_black_24dp)
                 .dontAnimate()
                 .fitCenter()
+                .into(imageView);*/
+        Glide.with(context)
+                .load(url)
+                //.apply(new RequestOptions().override(100, 100).placeholder(R.drawable.bg_image).error(R.drawable.bg_image))
+                .apply(new RequestOptions().placeholder(R.drawable.ic_person_outline_black_24dp).error(R.drawable.ic_person_outline_black_24dp))
                 .into(imageView);
     }
 }

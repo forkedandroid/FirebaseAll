@@ -207,6 +207,7 @@
 
 
     <dimen name="fab_elevation_3dp">3dp</dimen>
+    <dimen name="fab_elevation_5dp">5dp</dimen>
 
     <dimen name="popup_image_size">28dp</dimen>
     <dimen name="popup_image_pad">5dp</dimen>

@@ -54,7 +54,16 @@ android {
             abortOnError false
         }
     }
-    flavorDimensions "api", "mode"
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a'
+            universalApk true
+        }
+    }
+ /*   flavorDimensions "api", "mode"
     productFlavors {
         demo {
             dimension "mode"
@@ -66,12 +75,12 @@ android {
             applicationIdSuffix ".full"
             versionNameSuffix "full"
         }
-      /*  minApi24 {
+      *//*  minApi24 {
             dimension "api"
             minSdkVersion 24
             versionCode 500 + android.defaultConfig.versionCode
             versionNameSuffix "-minApi24"
-        }*/
+        }*//*
         minApi21 {
             dimension "api"
             minSdkVersion 21
@@ -88,7 +97,7 @@ android {
             // Gradle ignores any variants that satisfy the conditions above.
             setIgnore(true)
         }
-    }
+    }*/
 }
 
 repositories {
@@ -100,10 +109,11 @@ repositories {
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
 
-    compile 'com.github.bumptech.glide:glide:3.6.1'
+
     compile 'com.android.support:design:27.0.0'
     compile 'com.android.support:appcompat-v7:27.0.0'
 
@@ -162,12 +172,18 @@ dependencies {
 
 
     compile 'pub.devrel:easypermissions:0.1.5'
-    compile 'com.github.bumptech.glide:glide:3.6.0'
+
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'org.apache.httpcomponents:httpcore:4.3.1'
     compile 'org.apache.httpcomponents:httpmime:4.5'
     compile 'org.apache.httpcomponents:httpclient:4.5'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
+
+    // for the image loading
+    // http://square.github.io/picasso/
+    //compile 'com.squareup.picasso:picasso:2.5.2'
+    //https://github.com/bumptech/glide
+    compile 'com.github.bumptech.glide:glide:4.3.1'
 
     // for the edit text
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
@@ -194,6 +210,10 @@ dependencies {
     //database
     compile 'org.greenrobot:greendao:3.2.0'
     provided 'org.greenrobot:greendao-generator:3.2.0'
+
+    // for the rx java
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
 
     compile 'com.android.support:multidex:1.0.1'
 

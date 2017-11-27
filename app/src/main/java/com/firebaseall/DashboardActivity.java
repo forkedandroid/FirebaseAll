@@ -21,6 +21,7 @@ import com.auth.PhoneAuthActivity;
 import com.chat.ChatActivity;
 import com.demos.ActBottomBar;
 import com.demos.fragment.ContentActivity;
+import com.demos.pip.ActivityPIP;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.AppUpdaterUtils;
 import com.github.javiersantos.appupdater.enums.AppUpdaterError;
@@ -137,7 +138,8 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             //Intent intent = new Intent(DashboardActivity.this, ActAds.class);
             //Intent intent = new Intent(DashboardActivity.this, ActBottomBar.class);
-            Intent intent = new Intent(DashboardActivity.this, ContentActivity.class);
+            //Intent intent = new Intent(DashboardActivity.this, ContentActivity.class);
+            Intent intent = new Intent(DashboardActivity.this, ActivityPIP.class);
             startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
             Intent intent = new Intent(DashboardActivity.this, PhoneAuthActivity.class);

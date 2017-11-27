@@ -24,6 +24,7 @@
         android:supportsRtl="true"
         android:resizeableActivity="true"
         android:hardwareAccelerated="true"
+        android:supportsPictureInPicture="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme"> <!-- This meta-data tag is required to use Google Play Services. -->
 
@@ -145,6 +146,19 @@
             android:label="@string/title_activity_user_detail"
             android:theme="@style/AppTheme_bottombar" />
 
+
+
+        <!--for the PIP-->
+
+        <activity
+            android:name="com.demos.pip.ActivityPIP"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:supportsPictureInPicture="true">
+
+        </activity>
+        <activity android:name="com.demos.pip.MediaSessionPlaybackActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:supportsPictureInPicture="true" />
 
 
 
