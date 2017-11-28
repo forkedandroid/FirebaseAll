@@ -4,6 +4,7 @@ package com.auth;
  * Created by prashant.patel on 11/2/2017.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -19,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class EmailPasswordActivity extends BaseActivity implements
         View.OnClickListener {
@@ -66,11 +69,36 @@ public class EmailPasswordActivity extends BaseActivity implements
     }
     // [END on_start_check_user]
 
+
+
+    public void doSomething(Number param) {
+        if( param instanceof Double) {
+            System.out.println("param is a Double");
+        }
+        else if( param instanceof Integer) {
+            System.out.println("param is an Integer");
+        }
+
+        if( param instanceof Comparable) {
+            //subclasses of Number like Double etc. implement Comparable
+            //other subclasses might not -> you could pass Number instances that don't implement that interface
+            System.out.println("param is comparable");
+        }
+    }
+
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
         }
+
+        ArrayList strlist = new ArrayList<>();
+
+        if(strlist.get(0) instanceof String)
+        {
+
+        }
+
 
         showProgressDialog();
 

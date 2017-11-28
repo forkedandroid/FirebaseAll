@@ -26,7 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.firebaseall.R;
+import com.firebaseall.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,6 +45,9 @@ public class LoginFragment extends SimpleFragment {
     @BindView(R.id.tvLogin)
     TextView tvLogin;
 
+    @BindView(R.id.tvRegister)
+    TextView tvRegister;
+
     @BindView(R.id.tvForgot)
     TextView tvForgot;
 
@@ -58,17 +61,16 @@ public class LoginFragment extends SimpleFragment {
     @BindView(R.id.detail)
     TextView mDetailTextView;
 
+
+
     @BindView(R.id.verify_email_button)
     Button verify_email_button;
 
-    @BindView(R.id.email_password_buttons)
-    LinearLayout email_password_buttons;
-
-    @BindView(R.id.email_password_fields)
-    LinearLayout email_password_fields;
-
     @BindView(R.id.signed_in_buttons)
     LinearLayout signed_in_buttons;
+
+    @BindView(R.id.etFullName)
+    MaterialEditText etFullName;
 
     @BindView(R.id.etEmail)
     MaterialEditText mEmailField;
@@ -77,6 +79,7 @@ public class LoginFragment extends SimpleFragment {
     MaterialEditText mPasswordField;
 
     String TAG = LoginFragment.class.getName();
+
 
     // [START declare_auth]
     FirebaseAuth mAuth;
@@ -124,6 +127,8 @@ public class LoginFragment extends SimpleFragment {
         /*Glide.with(getActivity())
                 .load("asdasd")
                 .into(ivBgImage);*/
+        tvLogin.setSelected(true);
+        tvRegister.setSelected(false);
 
         Glide.with(this)
                 .load("err")
@@ -297,8 +302,7 @@ public class LoginFragment extends SimpleFragment {
                     user.getEmail(), user.isEmailVerified()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
-            email_password_buttons.setVisibility(View.GONE);
-            email_password_fields.setVisibility(View.GONE);
+
             signed_in_buttons.setVisibility(View.VISIBLE);
 
             verify_email_button.setEnabled(!user.isEmailVerified());
@@ -306,8 +310,7 @@ public class LoginFragment extends SimpleFragment {
             mStatusTextView.setText(R.string.signed_out);
             mDetailTextView.setText(null);
 
-            email_password_buttons.setVisibility(View.VISIBLE);
-            email_password_fields.setVisibility(View.VISIBLE);
+
             signed_in_buttons.setVisibility(View.GONE);
         }
     }
@@ -333,26 +336,43 @@ public class LoginFragment extends SimpleFragment {
         return blurredBitmap;
     }
 
-    @OnClick({R.id.fabNext,R.id.tvForgot,R.id.email_create_account_button,R.id.email_sign_in_button,R.id.sign_out_button,R.id.verify_email_button})
+    @OnClick({R.id.fabNext,R.id.tvForgot,R.id.sign_out_button,R.id.verify_email_button,R.id.tvLogin,R.id.tvRegister})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fabNext:
-                finish();
+                if(tvLogin.isSelected() == true)
+                {
+                    signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                }
+                else
+                {
+                    createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
+                }
                 break;
             case R.id.tvForgot:
                 finish();
-                break;
-            case R.id.email_create_account_button:
-                createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-                break;
-            case R.id.email_sign_in_button:
-                signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
                 break;
             case R.id.sign_out_button:
                 signOut();
                 break;
             case R.id.verify_email_button:
                 sendEmailVerification();
+                break;
+
+            case R.id.tvLogin:
+                if(tvLogin.isSelected() == false) {
+                    tvLogin.setSelected(true);
+                    tvRegister.setSelected(false);
+                    com.firebaseall.App.collapse(etFullName);
+                }
+                break;
+
+            case R.id.tvRegister:
+                if(tvLogin.isSelected() == true) {
+                    tvLogin.setSelected(false);
+                    tvRegister.setSelected(true);
+                    com.firebaseall.App.expandWRAP_CONTENT(etFullName);
+                }
                 break;
 
         }

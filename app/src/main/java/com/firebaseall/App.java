@@ -719,6 +719,8 @@ public class App extends com.demos.fragment.App {
     }
 
 
+
+
     public static void expandWRAP_CONTENT(final View v) {
         //v.measure(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT); //WRAP_CONTENT
         v.measure(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -774,6 +776,24 @@ public class App extends com.demos.fragment.App {
         v.startAnimation(a);
     }
 
+    public static void viewGone(final View v) {
+        try{
+            v.setVisibility(View.GONE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public static void viewShow(final View v) {
+        try{
+            v.setVisibility(View.VISIBLE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public static RequestBody createPartFromString(String value) {
         return RequestBody.create(MediaType.parse("multipart/form-data"), value);
