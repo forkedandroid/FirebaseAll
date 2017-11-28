@@ -145,7 +145,8 @@ public class DashboardActivity extends AppCompatActivity
             Intent intent = new Intent(DashboardActivity.this, PhoneAuthActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(DashboardActivity.this, EmailPasswordActivity.class);
+            Intent intent = new Intent(DashboardActivity.this, ContentActivity.class);
+           // Intent intent = new Intent(DashboardActivity.this, EmailPasswordActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_share) {
             Intent intent = new Intent(DashboardActivity.this, AnonymousAuthActivity.class);
