@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 
 import com.demos.fragment.bean.LiveInfo;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
+
 import com.king.base.util.LogUtils;
+import com.utils.HideKey;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +52,7 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
         mUnbinder = ButterKnife.bind(this,rootView);
         LogUtils.d("onCreateView");
         initUI();
+        HideKey.initialize(getActivity(), rootView);
         return rootView;
     }
 

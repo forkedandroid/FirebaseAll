@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.utils.HideKey;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -72,6 +74,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_auth);
+        HideKey.initialize(this);
 
         // Restore instance state
         if (savedInstanceState != null) {
