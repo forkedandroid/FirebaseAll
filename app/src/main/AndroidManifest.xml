@@ -145,6 +145,9 @@
             android:name="com.demos.fragment.ContentActivity"
             android:label="@string/title_activity_user_detail"
             android:theme="@style/AppTheme_bottombar" />
+        <activity
+            android:name="com.demos.fragment.ActSocialDashboard"
+            android:theme="@style/AppTheme_bottombar" />
 
 
 

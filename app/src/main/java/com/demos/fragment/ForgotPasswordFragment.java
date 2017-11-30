@@ -2,7 +2,6 @@ package com.demos.fragment;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Allocation;
@@ -29,17 +28,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginFragment extends SimpleFragment {
+public class ForgotPasswordFragment extends SimpleFragment {
 
     @BindView(R.id.fabNext)
     FloatingActionButton fabNext;
-
+    
     @BindView(R.id.tvLogin)
     TextView tvLogin;
 
@@ -60,6 +58,7 @@ public class LoginFragment extends SimpleFragment {
     TextView mDetailTextView;
 
 
+
     @BindView(R.id.verify_email_button)
     Button verify_email_button;
 
@@ -75,7 +74,7 @@ public class LoginFragment extends SimpleFragment {
     @BindView(R.id.etPassword)
     MaterialEditText mPasswordField;
 
-    String TAG = LoginFragment.class.getName();
+    String TAG = ForgotPasswordFragment.class.getName();
 
 
     // [START declare_auth]
@@ -83,24 +82,25 @@ public class LoginFragment extends SimpleFragment {
 
     // [END declare_auth]
 
-    public static LoginFragment newInstance() {
+    public static ForgotPasswordFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        LoginFragment fragment = new LoginFragment();
+        ForgotPasswordFragment fragment = new ForgotPasswordFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
 
+
     String uid;
     String coverUrl;
 
-    public static LoginFragment newInstance(String uid, String coverUrl) {
+    public static ForgotPasswordFragment newInstance(String uid, String coverUrl) {
 
         Bundle args = new Bundle();
 
-        LoginFragment fragment = new LoginFragment();
+        ForgotPasswordFragment fragment = new ForgotPasswordFragment();
         fragment.uid = uid;
         fragment.coverUrl = coverUrl;
         fragment.setArguments(args);
@@ -116,20 +116,18 @@ public class LoginFragment extends SimpleFragment {
     @SuppressLint("StringFormatInvalid")
     @Override
     public void initUI() {
+        com.firebaseall.App.showLog(TAG,"===initData====");
 
-        com.firebaseall.App.showLog(TAG, "===initUI====");
+        mPasswordField.setVisibility(View.GONE);
+        tvForgot.setVisibility(View.GONE);
+        tvLogin.setText("Forgot Password");
+        tvRegister.setText("Login");
 
-
-        tvLogin.setText("Login");
-        /*Glide.with(getActivity())
-                .load("asdasd")
-                .into(ivBgImage);*/
         tvLogin.setSelected(true);
-        tvRegister.setSelected(false);
 
         Glide.with(this)
                 .load("err")
-                // .apply(new RequestOptions().override(400, 400).placeholder(R.drawable.bg_image).error(R.drawable.bg_image))
+               // .apply(new RequestOptions().override(400, 400).placeholder(R.drawable.bg_image).error(R.drawable.bg_image))
                 .apply(new RequestOptions().placeholder(R.drawable.bg_image).error(R.drawable.bg_image))
                 .into(ivBgImage);
 
@@ -137,35 +135,12 @@ public class LoginFragment extends SimpleFragment {
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-
-     /*   Glide.with(getActivity()).asBitmap()
-                .load("https://wallpaperscraft.com/image/line_pattern_background_texture_light_50374_1080x1920.jpg")
-                .into(new SimpleTarget<Bitmap>() {
-                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        Bitmap blurred = blurRenderScript(resource, 10);
-                        ivBgImage.setImageBitmap(blurred);
-                    }
-                });*/
-
-
-        //  Picasso.with(getActivity()).load(R.drawable.bg_image).into(ivBgImage);
-
-        /*GlideApp
-                .with(getActivity())
-                .load("qawe24")
-                .placeholder(R.drawable.bg_image) // can also be a drawable
-                .into(ivBgImage);
-*/
-
     }
 
     @Override
     public void initData() {
-
-        com.firebaseall.App.showLog(TAG, "===initData====");
-        if (mAuth != null) {
+        com.firebaseall.App.showLog(TAG,"===initData====");
+        if(mAuth !=null) {
             FirebaseUser currentUser = mAuth.getCurrentUser();
             updateUI(currentUser);
         }
@@ -174,9 +149,10 @@ public class LoginFragment extends SimpleFragment {
 
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
-        if (!validateForm(false)) {
+        if (!validateForm()) {
             return;
         }
+
 
 
         // [START create_user_with_email]
@@ -189,25 +165,6 @@ public class LoginFragment extends SimpleFragment {
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-
-
-                            String strFullName = etFullName.getText().toString().trim();
-                            Uri uri = Uri.parse("android.resource://com.firebaseall/drawable/ic_person_pink_a400_48dp");
-                           // InputStream stream = getContentResolver().openInputStream(uri);
-                            UserProfileChangeRequest profileUpdates  =null;
-                            if(uri !=null) {
-                                profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(strFullName)
-                                        .setPhotoUri(uri)
-                                        .build();
-                            }
-                            else {
-                                profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(strFullName)
-                                        .build();
-                            }
-                            user.updateProfile(profileUpdates);
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -223,7 +180,7 @@ public class LoginFragment extends SimpleFragment {
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
-        if (!validateForm(true)) {
+        if (!validateForm()) {
             return;
         }
 
@@ -249,6 +206,34 @@ public class LoginFragment extends SimpleFragment {
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
                             mStatusTextView.setText(R.string.auth_failed);
+                        }
+                    }
+                });
+        // [END sign_in_with_email]
+    }
+
+    private void forgotPassword(String email) {
+        Log.d(TAG, "signIn:" + email);
+        if (!validateForm()) {
+            return;
+        }
+
+
+        // [START sign_in_with_email]
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "Email sent.");
+                            Toast.makeText(getActivity(), "Email sent successfully.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Log.d(TAG, "Email sent fail.");
+                            Toast.makeText(getActivity(), "Email id not registered.",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -291,38 +276,26 @@ public class LoginFragment extends SimpleFragment {
         // [END send_email_verification]
     }
 
-    private boolean validateForm(boolean isLogin) {
+    private boolean validateForm() {
         boolean valid = true;
 
-        if (isLogin == true) {
-            String email = mEmailField.getText().toString();
-            if (TextUtils.isEmpty(email)) {
-                mEmailField.setError("Required.");
-                valid = false;
-            } else {
-                mEmailField.setError(null);
-            }
-
-            String password = mPasswordField.getText().toString();
-            if (TextUtils.isEmpty(password)) {
-                mPasswordField.setError("Required.");
-                valid = false;
-            } else {
-                mPasswordField.setError(null);
-            }
-
-            return valid;
+        String email = mEmailField.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            mEmailField.setError("Required.");
+            valid = false;
         } else {
-            String password = etFullName.getText().toString();
-            if (TextUtils.isEmpty(password)) {
-                etFullName.setError("Required.");
-                valid = false;
-            } else {
-                etFullName.setError(null);
-            }
-            return valid;
+            mEmailField.setError(null);
         }
 
+        String password = mPasswordField.getText().toString();
+       /* if (TextUtils.isEmpty(password)) {
+            mPasswordField.setError("Required.");
+            valid = false;
+        } else {
+            mPasswordField.setError(null);
+        }*/
+
+        return valid;
     }
 
     private void updateUI(FirebaseUser user) {
@@ -345,6 +318,7 @@ public class LoginFragment extends SimpleFragment {
     }
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private Bitmap blurRenderScript(Bitmap smallBitmap, int radius) {
         RenderScript rs = RenderScript.create(getActivity());
@@ -364,22 +338,15 @@ public class LoginFragment extends SimpleFragment {
         return blurredBitmap;
     }
 
-    @OnClick({R.id.fabNext, R.id.tvForgot, R.id.sign_out_button, R.id.verify_email_button, R.id.tvLogin, R.id.tvRegister})
+    @OnClick({R.id.fabNext,R.id.tvForgot,R.id.sign_out_button,R.id.verify_email_button,R.id.tvLogin,R.id.tvRegister})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fabNext:
-                if (tvLogin.isSelected() == true) {
-                    startActivity(ActSocialDashboard.class);
-                    signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-                } else {
-                    createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
-                }
+                forgotPassword(mEmailField.getText().toString());
                 break;
-            case R.id.tvForgot:
-
-                //replaceFragment(R.id.fragmentContent, new ForgotPasswordFragment());
-                replaceFragmentNullBack(R.id.fragmentContent, new ForgotPasswordFragment());
-
+                case R.id.tvRegister:
+                    //closeFragment(ForgotPasswordFragment.this);
+                    getActivity().onBackPressed();
                 break;
             case R.id.sign_out_button:
                 signOut();
@@ -388,22 +355,25 @@ public class LoginFragment extends SimpleFragment {
                 sendEmailVerification();
                 break;
 
-            case R.id.tvLogin:
-                if (tvLogin.isSelected() == false) {
+           /* case R.id.tvLogin:
+                if(tvLogin.isSelected() == false) {
                     tvLogin.setSelected(true);
                     tvRegister.setSelected(false);
                     com.firebaseall.App.collapse(etFullName);
                 }
                 break;
 
-            case R.id.tvRegister:
-                if (tvLogin.isSelected() == true) {
+            case R.id.tvForgot:
+                if(tvLogin.isSelected() == true) {
                     tvLogin.setSelected(false);
                     tvRegister.setSelected(true);
                     com.firebaseall.App.expandWRAP_CONTENT(etFullName);
                 }
-                break;
+                break;*/
 
         }
     }
+
+
+
 }

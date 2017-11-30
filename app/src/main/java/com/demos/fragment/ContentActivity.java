@@ -1,5 +1,6 @@
 package com.demos.fragment;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -82,4 +83,16 @@ public class ContentActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(id, fragment).commit();
     }
 
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm !=null && fm.getBackStackEntryCount() > 0) {
+            com.firebaseall.App.showLog("ContentActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            com.firebaseall.App.showLog("ContentActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
+    }
 }

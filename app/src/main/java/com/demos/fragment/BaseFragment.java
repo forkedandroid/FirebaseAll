@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,22 @@ public abstract class BaseFragment<V extends BaseView, P extends BasePresenter<V
 
     public void replaceFragment(@IdRes int id, Fragment fragment) {
         getFragmentManager().beginTransaction().replace(id, fragment).commit();
+    }
+
+
+    public void replaceFragmentNullBack(@IdRes int id, Fragment fragment) {
+
+        //getFragmentManager().beginTransaction().replace(id, fragment).commit();
+
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(id, fragment ); // give your fragment container id in first parameter
+        transaction.addToBackStack(null);  // if written, this transaction will be added to backstack
+        transaction.commit();
+    }
+
+
+    public void closeFragment(Fragment fragment) {
+        fragment.getActivity().getFragmentManager().popBackStack();
     }
 
     public void replaceChildFragment(@IdRes int id, Fragment fragment) {
