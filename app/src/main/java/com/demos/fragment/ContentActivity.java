@@ -1,5 +1,6 @@
 package com.demos.fragment;
 
+import android.Manifest;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +11,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+
 import com.firebaseall.R;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.DexterError;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.PermissionRequestErrorListener;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.king.base.util.LogUtils;
 import com.utils.ConnectivityReceiverListener;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +48,43 @@ public class ContentActivity extends AppCompatActivity {
 
 
         swichFragment(getIntent());
+
+        // permissions
+        requestMultiplePermissions();
+    }
+
+    public void requestMultiplePermissions()
+    {
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.RECORD_AUDIO
+                ).withListener(new MultiplePermissionsListener() {
+            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
+                /* ... */
+                com.firebaseall.App.showLog("====onPermissionsChecked======");
+                if (report.areAllPermissionsGranted()) {
+                    com.firebaseall.App.showLog("====all permission are granted======");
+                } else {
+                    requestMultiplePermissions();
+                }
+            }
+            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+                /* ... */
+
+                com.firebaseall.App.showLog("====onPermissionRationaleShouldBeShown======");
+            }
+        })
+                .withErrorListener(new PermissionRequestErrorListener() {
+            @Override
+            public void onError(DexterError error) {
+                com.firebaseall.App.showLog("====withErrorListener====PermissionRequestErrorListener====onError===");
+                int y = 0;
+            }
+        })
+                .check();
     }
 
     @Override

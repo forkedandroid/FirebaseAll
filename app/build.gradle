@@ -23,7 +23,7 @@ android {
     defaultConfig {
         applicationId "com.firebaseall"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -216,6 +216,9 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.6'
 
     compile 'com.android.support:multidex:1.0.1'
+
+    //Permission utility - https://github.com/Karumi/Dexter
+    compile 'com.karumi:dexter:4.2.0'
 
 
 
