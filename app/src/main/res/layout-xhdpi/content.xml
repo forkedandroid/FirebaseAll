@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     android:background="#333333"
     >
+    <TextView
+        android:id="@+id/tvNoConnection"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/m_user_photo_50dp"
+        android:text="No connection"
+        android:textSize="@dimen/m_18sp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:gravity="center"
+        android:visibility="gone"
+        />
     <FrameLayout
         android:id="@+id/fragmentContent"
         android:layout_width="match_parent"

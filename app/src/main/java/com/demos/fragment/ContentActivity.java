@@ -7,9 +7,15 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
 
 import com.firebaseall.R;
 import com.king.base.util.LogUtils;
+import com.utils.ConnectivityReceiverListener;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by prashant.patel on 11/24/2017.
@@ -17,16 +23,39 @@ import com.king.base.util.LogUtils;
 
 public class ContentActivity extends AppCompatActivity {
 
+    @BindView(R.id.tvNoConnection)
+    TextView tvNoConnection;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content);
+        ButterKnife.bind(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
 
         swichFragment(getIntent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        com.firebaseall.App.setConnectivityListener(new ConnectivityReceiverListener() {
+            @Override
+            public void onNetworkConnectionChanged(boolean isConnected) {
+                com.firebaseall.App.showLog("====onNetworkConnectionChanged======"+isConnected);
+                if(isConnected == true)
+                {
+                    tvNoConnection.setVisibility(View.GONE);
+                }
+                else
+                {
+                    tvNoConnection.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     public void swichFragment(Intent intent){

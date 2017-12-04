@@ -38,6 +38,8 @@ import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.utils.AnalyticsTrackers;
+import com.utils.ConnectivityReceiverListener;
+import com.utils.NetworkChangeReceiver;
 import com.utils.SharePrefrences;
 
 import org.json.JSONArray;
@@ -838,6 +840,12 @@ public class App extends com.demos.fragment.App {
                 e.printStackTrace();
             }
         }
+    }
+
+    // for the internet connection method
+    public static void setConnectivityListener(ConnectivityReceiverListener connectivityListener2)
+    {
+        NetworkChangeReceiver.connectivityReceiverListener =  connectivityListener2;
     }
 
     // This snippet hides the system bars.
