@@ -67,7 +67,7 @@ public class ContentActivity extends AppCompatActivity {
                 if (report.areAllPermissionsGranted()) {
                     com.firebaseall.App.showLog("====all permission are granted======");
                 } else {
-                    requestMultiplePermissions();
+                  //  requestMultiplePermissions();
                 }
             }
             @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {

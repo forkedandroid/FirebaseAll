@@ -1,0 +1,235 @@
+<resources>
+    <string name="app_name">Stock app</string>
+    <string name="current_version_">Version 1.0</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="default_notification_channel_id">ch_message</string>
+
+    <string name="interstitial_ad_sample">Interstitial Ad Sample</string>
+    <string name="start_level">Level 1</string>
+    <string name="next_level">Next Level</string>
+    <!-- -
+        This is an ad unit ID for an interstitial test ad. Replace with your own interstitial ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+
+
+    <!- -->
+    <string name="interstitial_ad_unit_id">ca-app-pub-5194219019183767/7217469763</string>
+    <string name="banner_ad_unit_id">ca-app-pub-5194219019183767/8594841057</string>
+    <string name="banner_ad_unit_id_ac_2">ca-app-pub-4346653435295459/7368215831</string>
+    <string name="rev_video_ad_unit_id">ca-app-pub-5194219019183767/9333207658</string>
+    <string name="project_id_11">allapps-d2024</string>
+
+
+    <!--<string name="default_web_client_id">53084434855-poo5m19bbjlahss41do8v0fs2324lrp5.apps.googleusercontent.com</string>-->
+
+    <!--for chat-->
+    <string name="welcome_msg">Welcome!</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="contacts_permission_rationale">Access to account information is required to sign in.</string>
+    <string name="invite_menu_label">Invite</string>
+    <string name="invitation_message">Please joine me for a friendly chat</string>
+    <string name="invitation_cta">Call to action</string>
+    <string name="invitation_title">Friendly Chat Invite</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="fresh_config">Fresh Config</string>
+    <string name="cause_crash">Cause Crash</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+
+    <!--for auth-->
+    <string name="label_google_sign_in">Firebase + Google Sign In</string>
+    <string name="desc_google_sign_in">Use a Google Sign In credential to authenticate with Firebase.</string>
+
+    <string name="label_facebook_login">Firebase + Facebook Login</string>
+    <string name="desc_facebook_login">Use a Facebook Login credential to authenticate with Firebase.</string>
+
+    <string name="label_twitter_login">Firebase + Twitter Login</string>
+    <string name="desc_twitter_login">Use a Twitter Login credential to authenticate with Firebase.</string>
+
+    <string name="label_emailpassword">Email/Password Authentication</string>
+    <string name="desc_emailpassword">Use an email and password to authenticate with Firebase.</string>
+
+    <string name="label_phone_auth">Phone Number Authentication</string>
+    <string name="desc_phone_auth">Use a phone number to authenticate with Firebase.</string>
+
+    <string name="label_anonymous_auth">Anonymous Authentication</string>
+    <string name="desc_anonymous_auth">Sign in anonymously and then later upgrade to a full Firebase Auth user.</string>
+
+    <string name="label_custom_auth">Custom Authentication</string>
+    <string name="desc_custom_auth">Use a custom token signed by your own server to authenticate with Firebase.</string>
+
+    <string name="label_firebase_ui">FirebaseUI Auth</string>
+    <string name="desc_firebase_ui">Use the FirebaseUI-Android library to authenticate with Firebase.</string>
+
+    <string name="hint_user_id">User ID</string>
+    <string name="get_custom_token">Get Token</string>
+
+    <string name="create_account">Create Account</string>
+
+    <string name="verify_email">Verify Email</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="loading">Loading…</string>
+    <string name="custom_token">Custom Token</string>
+    <string name="signed_in">Signed In</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="token_null">Token: null</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="desc_firebase_lockup">Firebase logo and name</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="start_phone_auth">Start</string>
+    <string name="verify_phone_auth">Verify</string>
+    <string name="resend_phone_auth">Resend</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_verification_code">Verification Code</string>
+    <string name="status_code_sent">Code Sent</string>
+    <string name="status_verification_failed">Verification failed</string>
+    <string name="status_verification_succeeded">Verification succeeded</string>
+    <string name="status_sign_in_failed">Sign-in failed</string>
+    <string name="instant_validation">(instant validation)</string>
+
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+
+    <string name="facebook_status_fmt">Facebook User: %s</string>
+    <string name="facebook_title_text">Facebook Login</string>
+
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="emailpassword_title_text">Email and Password</string>
+
+    <string name="phone_title_text">Phone Number</string>
+
+    <string name="twitter_status_fmt">Twitter User: %s</string>
+    <string name="twitter_title_text">Twitter Login</string>
+
+    <string name="firebaseui_status_fmt">Firebase User: %s</string>
+    <string name="firebaseui_title_text">FirebaseUI Auth</string>
+
+    <string name="id_fmt">User ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+
+
+
+    <!--for the storage-->
+
+    <string name="camera_button_text">Upload</string>
+    <string name="sign_in_prompt">Sign In to begin</string>
+    <string name="take_photo_prompt">Upload a Photo</string>
+    <string name="download">Download</string>
+    <string name="sign_in_anonymously">Sign In</string>
+    <string name="rationale_storage">This sample reads images from your camera to demonstrate uploading.</string>
+    <string name="label_link">Link to Uploaded File</string>
+    <string name="label_download">Download File</string>
+    <string name="log_out">Log out</string>
+    <string name="success">Success</string>
+
+    <string name="progress_downloading">Downloading…</string>
+    <string name="progress_uploading">Uploading…</string>
+    <string name="progress_auth">Signing In…</string>
+
+    <string name="upload_success">Upload finished</string>
+    <string name="upload_failure">Upload failed</string>\
+
+    <string name="download_success">Download finished</string>
+    <string name="download_failure">Download failure</string>
+
+
+    <!--for the post-->
+    <string name="title_activity_feed">FeedActivity</string>
+    <string name="server_client_id">85010793512-5t8ejsijkp68vgudb9jn00ct1tnrgoac.apps.googleusercontent.com</string>
+    <string name="server_widget_url">http://www.google.com</string>
+
+    <string name="title_activity_feeds">FeedsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Content Description for images -->
+    <string name="desc_google_icon">Google Logo</string>
+    <string name="server_client_id_web">85010793512-guh26t71dh519hp1il371it4bq4kil0h.apps.googleusercontent.com</string>
+    <!--<string name="project_id_22">friendlypix-4fa22</string>-->
+    <string name="title_activity_welcome">FriendlyPix</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="welcome_screen_text">Welcome to FriendlyPix</string>
+    <string name="explore_button_text">explore</string>
+    <string name="sign_in_button_text">sign in</string>
+    <string name="sign_out_button_text">sign out</string>
+    <string name="show_feed_button_text">show feed</string>
+    <string name="drawer_profile_title">Profile</string>
+    <string name="drawer_settings_title">Settings</string>
+    <string name="drawer_your_feed_title">Your Feed</string>
+    <string name="title_activity_comments">CommentsActivity</string>
+    <string name="title_activity_new_post">New Post</string>
+    <string name="invite_friends_button_text">Invite your friends</string>
+    <string name="my_posts_button_text">My posts</string>
+    <string name="title_activity_user_detail">UserDetailActivity</string>
+    <string name="follow_user_error">Unable to follow user.</string>
+    <string name="picture_chooser_title">Select or take picture to post</string>
+    <string name="new_comment_hint">Enter new comment</string>
+    <string name="new_post_location_placeholder">Getting location...</string>
+    <string name="user_info_no_name">Unknown user</string>
+    <string name="error_required_field">Required</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_upload_task_create">Couldn\'t create upload task.</string>
+    <string name="default_progress_message">Please wait...</string>
+    <string name="profile_progress_message">Signing in...</string>
+    <string name="post_upload_progress_message">Uploading...</string>
+    <string name="user_logged_out_error">You must be logged in to do that.</string>
+    <string name="error_user_not_signed_in">Error user not signed in.</string>
+
+
+
+    <string name="tab_1">Label 1</string>
+    <string name="tab_2">Label 2</string>
+    <string name="tab_3">Label 3</string>
+    <string name="tab_4">Label 4</string>
+    <string name="tab_5">Label 5</string>
+
+    <string name="menu_1">Post</string>
+    <string name="menu_2">Chat</string>
+    <string name="menu_3">Settings</string>
+    <string name="menu_4">Profile</string>
+    <string name="menu_5">Map</string>
+
+
+
+
+    <!-- 房间内 -->
+    <string name="room_chat">聊天</string>
+    <string name="room_ranking">排行</string>
+    <string name="room_anchor">主播</string>
+    <string name="room_follow">关注</string>
+    <string name="hint_room_chat">和主播说点什么…</string>
+    <string name="tips_notice_desc">&#160;全民直播提倡绿色直播。封页和直播内容含吸烟，低俗，引诱，暴露等都将被封停账号。网警在线24小时巡查哦。</string>
+
+
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="info">Info</string>
+    <string name="info_description">Information about this video</string>
+    <string name="info_uri" translatable="false">https://peach.blender.org/</string>
+    <string name="fast_forward">Fast forward</string>
+    <string name="fast_rewind">Fast rewind</string>
+    <string name="minimize">Minimize</string>
+    <string name="enter_picture_in_picture">Enter Picture-in-Picture mode</string>
+    <string name="explanation"><![CDATA[
+    This sample demonstrates basic usage of Picture-in-Picture mode for handheld devices.
+    The sample plays a video. The video keeps on playing when the app is turned in to
+    Picture-in-Picture mode. On Picture-in-Picture screen, the app shows an action item to pause or
+    resume the video.
+    ]]></string>
+    <string name="switch_custom">Switch to custom actions example</string>
+    <string name="switch_media_session">Switch to using MediaSession</string>
+</resources>

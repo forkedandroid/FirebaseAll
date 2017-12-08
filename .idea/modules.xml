@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FirebaseAll.iml" filepath="$PROJECT_DIR$/FirebaseAll.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stockapp/stockapp.iml" filepath="$PROJECT_DIR$/stockapp/stockapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utubemvp/utubemvp.iml" filepath="$PROJECT_DIR$/utubemvp/utubemvp.iml" />
     </modules>
   </component>
 </project>

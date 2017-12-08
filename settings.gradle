@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':stockapp', ':utubemvp'
 /*
 include ':app_chat'
 include ':app_database'
