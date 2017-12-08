@@ -89,12 +89,12 @@ public class StockListActivity extends AppCompatActivity {
       mRecyclerView.setLayoutManager(
               new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
       mRecyclerView.setAdapter(mAdapter);
-      mRecyclerView.addOnItemTouchListener(
+   /*   mRecyclerView.addOnItemTouchListener(
               new RecyclerItemClickListener(this, mRecyclerView,
                       (View view, int position) ->
                               mPresenter.startYouTubeIntent(position)
               )
-      );
+      );*/
       mPresenter.loadPlaylistItems(strInput);
       mSwipeRefreshLayout.setOnRefreshListener(mPresenter::loadPlaylistItems);
 
