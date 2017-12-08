@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.stockapp.model.StocklistItemListResponse;
 import com.stockapp.service.ApiService;
 import com.utils.ConnectivityReceiverListener;
 import com.utils.NetworkChangeReceiver;
@@ -39,16 +40,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -97,6 +104,10 @@ public class App extends Application {
     public static String OP_REGISTER = "Register";
     public static String adsAppBnrId = "ca-app-pub-4346653435295459/7368215831";
 
+    //for the realm database encryption and decryption key
+    public static String RealmEncryptionKey = "f263575e7b00a977a8e915feb9bfb2f992b2b8f22eaaaaaaa46523132131689465413132132165469487987987643545465464abbbbbccdddffff111222333";
+    public static RealmConfiguration realmConfiguration;
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -115,9 +126,13 @@ public class App extends Application {
             MultiDex.install(this);
             mContext = getApplicationContext();
             sharePrefrences = new SharePrefrences(App.this);
+
+            Realm.init(this);
+            realmConfiguration = getRealmConfiguration();
+
+            createAppFolder();
             getFont_Regular();
             getFont_Bold();
-            createAppFolder();
 
 
 
@@ -127,6 +142,124 @@ public class App extends Application {
         }
     }
 
+    public static RealmConfiguration getRealmConfiguration()
+    {
+        if(realmConfiguration !=null)
+        {
+            return realmConfiguration;
+        }
+        else
+        {
+/*
+
+            realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(App.getEncryptRawKey())
+                    .build();
+*/
+
+
+            realmConfiguration = new RealmConfiguration.Builder()
+                    .deleteRealmIfMigrationNeeded()
+                    .encryptionKey(App.getEncryptRawKey())
+                    .build();
+
+
+            return realmConfiguration;
+        }
+    }
+
+    // for the encrypt Encrypt
+    public static byte[] getEncryptRawKey() {
+
+        try {
+            /*byte[] bytes64Key = App.RealmEncryptionKey.getBytes("UTF-8");
+            KeyGenerator kgen = KeyGenerator.getInstance("AES");
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+            sr.setSeed(bytes64Key);
+            kgen.init(128, sr);
+            SecretKey skey = kgen.generateKey();
+            byte[] raw = skey.getEncoded();*/
+
+            byte[] key = new BigInteger(App.RealmEncryptionKey,16).toByteArray();
+            return key;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+    public static void insertStockSymbol(Realm realm, StocklistItemListResponse gsonResponseWallpaperList) {
+        try {
+            App.showLog("========insertStockSymbol=====");
+
+
+            realm.beginTransaction();
+            StocklistItemListResponse realmDJsonDashboardModel = realm.copyToRealm(gsonResponseWallpaperList);
+            realm.commitTransaction();
+
+            getStockSymbol(realm);
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                realm.commitTransaction();
+            }
+            catch (Exception e2)
+            {e2.printStackTrace();}
+        }
+
+    }
+
+    public static void getStockSymbol(Realm realm) {
+        try {
+            App.showLog("========getDataWallpaper=====");
+            ArrayList<StocklistItemListResponse> arrListStocklistItemListResponse = new ArrayList<>();
+
+            RealmResults<StocklistItemListResponse> arrDLocationModel = realm.where(StocklistItemListResponse.class).findAll();
+            App.showLog("===arrDLocationModel==" + arrDLocationModel);
+            List<StocklistItemListResponse> gsonResponseWallpaperList = arrDLocationModel;
+            arrListStocklistItemListResponse = new ArrayList<StocklistItemListResponse>(gsonResponseWallpaperList);
+
+            for (int k = 0; k < arrListStocklistItemListResponse.size(); k++) {
+                App.showLog(k + "===arrListStocklistItemListResponse=Symbol=" + arrListStocklistItemListResponse.get(k).Symbol);
+                App.showLog(k + "===arrListStocklistItemListResponse=Exchange=" + arrListStocklistItemListResponse.get(k).Exchange);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static List<StocklistItemListResponse> getCheckIsFavorite(Realm realm,String Symbol_Exchange)
+    {
+        try {
+            RealmResults<StocklistItemListResponse> arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                    .beginGroup()
+                    .equalTo("Symbol_Exchange", Symbol_Exchange)
+                    /*.or()
+                    .contains("name", "Jo")*/
+                    .endGroup()
+
+                    .findAll();
+
+            App.showLog("===arrDLocationModel==" + arrDLocationModel);
+            List<StocklistItemListResponse> gsonResponseStocklist = arrDLocationModel;
+            App.showLog("=====gsonResponseWallpaperList==" + gsonResponseStocklist.size());
+
+            return gsonResponseStocklist;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return  null;
+        }
+    }
 
     public static Bitmap RotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();

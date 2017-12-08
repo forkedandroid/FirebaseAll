@@ -1,6 +1,7 @@
 package com.stockapp.view;
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
@@ -19,18 +20,17 @@ import android.widget.TextView;
 import com.stockapp.App;
 import com.stockapp.R;
 import com.stockapp.adapter.RecyclerItemClickListener;
-import com.stockapp.presenter.StockListPresenter;
+import com.stockapp.presenter.FavoriteStockListPresenter;
 import com.utils.HideKey;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.Realm;
 
-public class StockListActivity extends AppCompatActivity {
+public class FavoriteStockListActivity extends AppCompatActivity {
 
-  private static final String TAG = "StockListActivity";
+  private static final String TAG = "FavoriteStockListActivity";
   private Adapter mAdapter;
-  private StockListPresenter mPresenter;
+  private FavoriteStockListPresenter mPresenter;
 
 
   @BindView(R.id.recyclerView)
@@ -55,77 +55,44 @@ public class StockListActivity extends AppCompatActivity {
   SearchView searchView;
   String strInput = "a";
 
-  Realm realm;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    try {
-      setContentView(R.layout.activity_stock_list);
-      ButterKnife.bind(this);
+    setContentView(R.layout.activity_stock_list);
+    ButterKnife.bind(this);
 
-      toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_black_24dp);
-      setSupportActionBar(toolbar);
-      toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          finish();
-        }
-      });
+    toolbar.setNavigationIcon(R.drawable.ic_poll_black_48dp);
+    setSupportActionBar(toolbar);
+    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+       // finish();
+      }
+    });
 
+    mPresenter = new FavoriteStockListPresenter(this, App.getApiService());
 
+    mRecyclerView.setLayoutManager(
+        new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    mRecyclerView.setAdapter(mAdapter);
+    mRecyclerView.addOnItemTouchListener(
+        new RecyclerItemClickListener(this, mRecyclerView,
+            (View view, int position) ->
+                mPresenter.startYouTubeIntent(position)
+        )
+    );
+    mPresenter.loadPlaylistItems(strInput);
+    mSwipeRefreshLayout.setOnRefreshListener(mPresenter::loadPlaylistItems);
 
+    fabSearch.setVisibility(View.VISIBLE);
+    fabSearch.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(FavoriteStockListActivity.this,StockListActivity.class);
+        startActivity(intent);
 
-      /* // Clear the realm from last time
-            Realm.deleteRealm(realmConfiguration);
-*/
-            /*RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                    .encryptionKey(App.getEncryptRawKey())
-                    .build();
-*/
-      //realm = Realm.getInstance(realmConfiguration);
-      realm = Realm.getInstance(App.getRealmConfiguration());
-      mPresenter = new StockListPresenter(this, App.getApiService(),realm);
-      mRecyclerView.setLayoutManager(
-              new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-      mRecyclerView.setAdapter(mAdapter);
-      mRecyclerView.addOnItemTouchListener(
-              new RecyclerItemClickListener(this, mRecyclerView,
-                      (View view, int position) ->
-                              mPresenter.startYouTubeIntent(position)
-              )
-      );
-      mPresenter.loadPlaylistItems(strInput);
-      mSwipeRefreshLayout.setOnRefreshListener(mPresenter::loadPlaylistItems);
-
-      fabSearch.setVisibility(View.GONE);
-      fabSearch.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          if (searchView != null) {
-          /*searchView.setIconifiedByDefault(true);
-          searchView.requestFocus();*/
-
-        /*  searchView.setIconifiedByDefault(true);
-          searchView.setFocusable(true);
-          searchView.setIconified(false);
-          searchView.requestFocusFromTouch();*/
-
-            searchView.onActionViewExpanded();
-
-          }
-        }
-      });
-
-
-
-
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
-
+      }
+    });
   }
 
   @Override
@@ -134,7 +101,7 @@ public class StockListActivity extends AppCompatActivity {
     HideKey.initialize(this);
   }
 
-  @Override
+ /* @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.menu_search, menu);
     // Retrieve the SearchView and plug it into SearchManager
@@ -160,7 +127,7 @@ public class StockListActivity extends AppCompatActivity {
 
     searchView.setIconifiedByDefault(false);
     return true;
-  }
+  }*/
   public void setLoading(boolean loading) {
     circleProgressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
     mSwipeRefreshLayout.setRefreshing(loading);

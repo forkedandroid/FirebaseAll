@@ -8,6 +8,7 @@ import com.stockapp.adapter.StockListAdapter;
 import com.stockapp.model.PlaylistItem;
 import com.stockapp.model.StocklistItemListResponse;
 import com.stockapp.service.ApiService;
+import com.stockapp.view.FavoriteStockListActivity;
 import com.stockapp.view.StockDetailActivity;
 import com.stockapp.view.StockListActivity;
 
@@ -18,12 +19,11 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
 
-public class StockListPresenter {
+public class FavoriteStockListPresenter {
 
-  private static final String TAG = "StockListPresenter";
-  private StockListActivity mView;
+  private static final String TAG = "FavoriteStockListPresenter";
+  private FavoriteStockListActivity mView;
   private ApiService mYouTubeService;
   String input = "";
   private StockListAdapter mAdapter;
@@ -31,12 +31,12 @@ public class StockListPresenter {
 
 
 
-  public StockListPresenter(StockListActivity activity, ApiService youTubeService, Realm realm) {
+  public FavoriteStockListPresenter(FavoriteStockListActivity activity, ApiService youTubeService) {
     mView = activity;
     mYouTubeService = youTubeService;
     listStocklistItemListResponse = new ArrayList<>();
 
-    mAdapter = new StockListAdapter(listStocklistItemListResponse,realm);
+    mAdapter = new StockListAdapter(listStocklistItemListResponse,null);
 
 
 
@@ -72,7 +72,7 @@ public class StockListPresenter {
               @Override
               public void onError(Throwable e) {
                   App.showLog(TAG , "======onError===");
-                  Log.d(TAG, "We got an error: " + e);
+                  App.showLog(TAG, "We got an error: " + e);
                   mView.setLoading(false);
               }
 

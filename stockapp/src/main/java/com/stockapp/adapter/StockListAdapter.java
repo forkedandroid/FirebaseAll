@@ -1,5 +1,6 @@
 package com.stockapp.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,13 @@ import com.squareup.picasso.Picasso;
 import com.stockapp.App;
 import com.stockapp.R;
 import com.stockapp.model.StocklistItemListResponse;
+import com.stockapp.view.StockDetailActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 /**
  * Provide views to RecyclerView with data from mDataSet.
@@ -24,6 +27,7 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
   private static final String TAG = "StockListAdapter";
 
   private List<StocklistItemListResponse> mDataSet;
+  Realm realm;
 
   // BEGIN_INCLUDE(recyclerViewSampleViewHolder)
   /**
@@ -31,8 +35,9 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
    *
    * @param dataSet String[] containing the data to populate views to be used by RecyclerView.
    */
-  public StockListAdapter(List<StocklistItemListResponse> dataSet) {
+  public StockListAdapter(List<StocklistItemListResponse> dataSet,Realm realm) {
     mDataSet = dataSet;
+    this.realm = realm;
   }
   // END_INCLUDE(recyclerViewSampleViewHolder)
 
@@ -57,6 +62,52 @@ public class StockListAdapter extends RecyclerView.Adapter<StockListAdapter.View
     viewHolder.setTitle(stocklistItemListResponse.Name);
     viewHolder.setDescription("Symbol - "+stocklistItemListResponse.Symbol +
             "\nExchange - "+ stocklistItemListResponse.Exchange);
+
+    if(realm !=null)
+    {
+      if(App.getCheckIsFavorite(realm,stocklistItemListResponse.Symbol + "_"+stocklistItemListResponse.Exchange) !=null  && App.getCheckIsFavorite(realm,stocklistItemListResponse.Symbol + "_"+stocklistItemListResponse.Exchange).size() > 0)
+      {
+        viewHolder.imageView.setSelected(true);
+        viewHolder.imageView.setImageResource(R.drawable.ic_star_black_24dp);
+      }
+      else
+      {
+        viewHolder.imageView.setSelected(false);
+        viewHolder.imageView.setImageResource(R.drawable.ic_star_border_black_24dp);
+      }
+    }
+    viewHolder.descriptionTextView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        App.showLog("========position===="+position);
+        App.showLog("========position====Symbol==="+mDataSet.get(position).Symbol);
+
+       /* Intent intent = new Intent(co,StockDetailActivity.class);
+        intent.putExtra(App.tagStocklistItemListResponse , mDataSet.get(position));
+        mView.startActivity(intent);*/
+      }
+    });
+
+
+
+    viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if(view.isSelected() == true)
+        {
+         App.showLog("=====fav added----Remove==");
+        }
+        else
+        {
+          App.showLog("=====fav not added----Add==");
+
+          if(realm !=null)
+          {
+            App.insertStockSymbol(realm,mDataSet.get(position));
+          }
+        }
+      }
+    });
   //  viewHolder.setImageView(stocklistItemListResponse.getThumbnails().getHigh().getUrl());
   }
   // END_INCLUDE(recyclerViewOnCreateViewHolder)
