@@ -218,6 +218,7 @@ public class StockDetailActivity extends AppCompatActivity {
                     "Open - $" + stockDetailResponse.Open + "\n"
             );
 
+            stocklistItemListResponse.Name = stockDetailResponse.Name;
             stocklistItemListResponse.Symbol = stockDetailResponse.Symbol;
             stocklistItemListResponse.Exchange = "";
 
