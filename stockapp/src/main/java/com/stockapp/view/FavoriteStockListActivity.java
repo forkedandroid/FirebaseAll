@@ -66,7 +66,7 @@ public class FavoriteStockListActivity extends AppCompatActivity {
     setContentView(R.layout.activity_stock_list);
     ButterKnife.bind(this);
 
-    toolbar.setNavigationIcon(R.drawable.ic_poll_black_48dp);
+    toolbar.setNavigationIcon(R.mipmap.ic_launcher);
     setSupportActionBar(toolbar);
     toolbar.setNavigationOnClickListener(new View.OnClickListener() {
       @Override
