@@ -130,9 +130,9 @@ public class App extends Application {
             Realm.init(this);
             realmConfiguration = getRealmConfiguration();
 
-            createAppFolder();
-            getFont_Regular();
-            getFont_Bold();
+            //createAppFolder();
+            //getFont_Regular();
+            //getFont_Bold();
 
 
 
@@ -192,13 +192,13 @@ public class App extends Application {
 
 
 
-    public static void insertStockSymbol(Realm realm, StocklistItemListResponse gsonResponseWallpaperList) {
+    public static void insertStockSymbol(Realm realm, StocklistItemListResponse stocklistItemListResponse) {
         try {
             App.showLog("========insertStockSymbol=====");
 
 
             realm.beginTransaction();
-            StocklistItemListResponse realmDJsonDashboardModel = realm.copyToRealm(gsonResponseWallpaperList);
+            StocklistItemListResponse realmDJsonDashboardModel = realm.copyToRealm(stocklistItemListResponse);
             realm.commitTransaction();
 
             getStockSymbol(realm);
@@ -210,7 +210,51 @@ public class App extends Application {
             catch (Exception e2)
             {e2.printStackTrace();}
         }
+    }
+    public static void removeStockSymbol(Realm realm, StocklistItemListResponse stocklistItemListResponse)
+    {
+        try{
 
+            realm.beginTransaction();
+
+            RealmResults<StocklistItemListResponse> arrDLocationModel;
+            if(stocklistItemListResponse.Exchange !=null && stocklistItemListResponse.Exchange.length() > 0){
+                arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                        .beginGroup()
+                        .equalTo("Symbol", stocklistItemListResponse.Symbol)
+                       // .equalTo("Exchange",stocklistItemListResponse.Exchange)
+                        .endGroup()
+                        .findAll();
+            }
+            else{
+                arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                        .beginGroup()
+                        .equalTo("Symbol", stocklistItemListResponse.Symbol)
+                        .endGroup()
+                        .findAll();
+
+            }
+
+           /* RealmResults<StocklistItemListResponse> arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                    .beginGroup()
+                    .equalTo("Symbol", stocklistItemListResponse.Symbol)
+                    .equalTo("Exchange",stocklistItemListResponse.Exchange)
+                    .or()
+                    .equalTo("Exchange","")
+                    *//*.or()
+                    .contains("name", "Jo")*//*
+                    .endGroup()
+
+                    .findAll();*/
+
+            arrDLocationModel.deleteAllFromRealm();
+            realm.commitTransaction();
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public static void getStockSymbol(Realm realm) {
@@ -236,17 +280,38 @@ public class App extends Application {
     }
 
 
-    public static List<StocklistItemListResponse> getCheckIsFavorite(Realm realm,String Symbol_Exchange)
+    public static List<StocklistItemListResponse> getCheckIsFavorite(Realm realm,String Symbol,String Exchange)
     {
         try {
-            RealmResults<StocklistItemListResponse> arrDLocationModel = realm.where(StocklistItemListResponse.class)
-                    .beginGroup()
-                    .equalTo("Symbol_Exchange", Symbol_Exchange)
-                    /*.or()
-                    .contains("name", "Jo")*/
-                    .endGroup()
 
-                    .findAll();
+            RealmResults<StocklistItemListResponse> arrDLocationModel;
+
+            if(Exchange !=null && Exchange.length() > 0){
+                arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                        .beginGroup()
+                        .equalTo("Symbol", Symbol)
+                       // .equalTo("Exchange",Exchange)
+                        .endGroup()
+                        .findAll();
+            }
+            else{
+                arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                        .beginGroup()
+                        .equalTo("Symbol", Symbol)
+                        .endGroup()
+                        .findAll();
+
+            }
+            /*RealmResults<StocklistItemListResponse> arrDLocationModel = realm.where(StocklistItemListResponse.class)
+                    .beginGroup()
+                    .equalTo("Symbol", Symbol)
+                    .equalTo("Exchange",Exchange)
+                   *//* .or()
+                    .equalTo("Exchange","")*//*
+                    *//*.or()
+                    .contains("name", "Jo")*//*
+                    .endGroup()
+                    .findAll();*/
 
             App.showLog("===arrDLocationModel==" + arrDLocationModel);
             List<StocklistItemListResponse> gsonResponseStocklist = arrDLocationModel;
@@ -260,6 +325,33 @@ public class App extends Application {
             return  null;
         }
     }
+
+
+    public static ArrayList<StocklistItemListResponse>  getAllStockSymbolList(Realm realm) {
+        ArrayList<StocklistItemListResponse> arrListStocklistItemListResponse = new ArrayList<>();
+        try {
+            App.showLog("========getDataWallpaper=====");
+
+
+            RealmResults<StocklistItemListResponse> arrDLocationModel = realm.where(StocklistItemListResponse.class).findAll();
+            App.showLog("===arrDLocationModel==" + arrDLocationModel);
+            List<StocklistItemListResponse> gsonResponseWallpaperList = arrDLocationModel;
+            arrListStocklistItemListResponse = new ArrayList<StocklistItemListResponse>(gsonResponseWallpaperList);
+
+           /* for (int k = 0; k < arrListStocklistItemListResponse.size(); k++) {
+                App.showLog(k + "===arrListStocklistItemListResponse=Symbol=" + arrListStocklistItemListResponse.get(k).Symbol);
+                App.showLog(k + "===arrListStocklistItemListResponse=Exchange=" + arrListStocklistItemListResponse.get(k).Exchange);
+            }*/
+
+           return arrListStocklistItemListResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return arrListStocklistItemListResponse;
+        }
+
+    }
+
+
 
     public static Bitmap RotateBitmap(Bitmap source, float angle) {
         Matrix matrix = new Matrix();

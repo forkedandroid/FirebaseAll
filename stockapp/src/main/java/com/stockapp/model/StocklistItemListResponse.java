@@ -23,20 +23,10 @@ public class StocklistItemListResponse  extends RealmObject implements Serializa
   @Expose
   public String Exchange="";
 
-  @PrimaryKey @Index
-  @SerializedName("Symbol_Exchange")
-  @Expose
-  public String Symbol_Exchange = getStringSymbol_Exchange();
-
-
   @SerializedName("isFavorite")
   @Expose
   public String isFavorite = "0";
 
-  public String getStringSymbol_Exchange()
-  {
-    return Symbol+"_"+Exchange;
-  }
 
 
 }

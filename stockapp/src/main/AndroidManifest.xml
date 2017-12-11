@@ -12,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:resizeableActivity="true"
-        android:hardwareAccelerated="true"
+        android:hardwareAccelerated="false"
         android:supportsPictureInPicture="true"
         android:largeHeap="true"
         android:theme="@style/AppTheme">
 
         <!--DashboardActivity-->
     <activity
-            android:name=".view.FavoriteStockListActivity"
+            android:name=".view.ActSplash"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,6 +27,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+    <activity
+            android:name=".view.FavoriteStockListActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+         <!--   <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".view.StockListActivity"

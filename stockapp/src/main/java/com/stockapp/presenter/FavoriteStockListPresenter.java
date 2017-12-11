@@ -1,56 +1,56 @@
 package com.stockapp.presenter;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.stockapp.App;
+import com.stockapp.adapter.FavoriteListAdapter;
 import com.stockapp.adapter.StockListAdapter;
 import com.stockapp.model.PlaylistItem;
 import com.stockapp.model.StocklistItemListResponse;
 import com.stockapp.service.ApiService;
 import com.stockapp.view.FavoriteStockListActivity;
 import com.stockapp.view.StockDetailActivity;
-import com.stockapp.view.StockListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import io.realm.Realm;
 
 public class FavoriteStockListPresenter {
 
-  private static final String TAG = "FavoriteStockListPresenter";
-  private FavoriteStockListActivity mView;
-  private ApiService mYouTubeService;
-  String input = "";
-  private StockListAdapter mAdapter;
-  private List<StocklistItemListResponse> listStocklistItemListResponse;
+    private static final String TAG = "FavoriteStockListPresenter";
+    private FavoriteStockListActivity mView;
+    private ApiService mYouTubeService;
+    String input = "";
+    private FavoriteListAdapter mAdapter;
+    private List<StocklistItemListResponse> listStocklistItemListResponse;
+    Realm realm;
 
 
+    public FavoriteStockListPresenter(FavoriteStockListActivity activity, ApiService youTubeService, Realm realm) {
+        mView = activity;
+        this.realm = realm;
+        mYouTubeService = youTubeService;
+        listStocklistItemListResponse = new ArrayList<>();
+        mAdapter = new FavoriteListAdapter(activity, listStocklistItemListResponse, realm);
+    }
 
-  public FavoriteStockListPresenter(FavoriteStockListActivity activity, ApiService youTubeService) {
-    mView = activity;
-    mYouTubeService = youTubeService;
-    listStocklistItemListResponse = new ArrayList<>();
+    /**
+     * Load items from YouTube API using RxJava.
+     */
+    public void loadPlaylistItems(String input) {
+        App.showLog(TAG, "======loadPlaylistItems===input=" + input);
 
-    mAdapter = new StockListAdapter(listStocklistItemListResponse,null);
-
-
-
-
-  }
-
-  /**
-   * Load items from YouTube API using RxJava.
-   */
-  public void loadPlaylistItems(String input) {
-      App.showLog(TAG , "======loadPlaylistItems===input="+input);
-      mView.setLoading(true);
+        mView.setLoading(true);
         this.input = input;
-        mYouTubeService
+        listStocklistItemListResponse.clear();
+        listStocklistItemListResponse.addAll(App.getAllStockSymbolList(realm));
+        mView.swapAdapter(mAdapter);
+        mView.setLoading(false);
+
+
+
+     /*   mYouTubeService
             .getSearchStockCompanyList(input)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
@@ -82,29 +82,30 @@ public class FavoriteStockListPresenter {
                   mView.swapAdapter(mAdapter);
                   mView.setLoading(false);
               }
-            });
+            });*/
 
-  }
+    }
 
-  /**
-   * Intent to launch YouTube app based on {@link PlaylistItem} video ID.
-   * @param position Position of {@link PlaylistItem} in dataset
-   */
-  public void startYouTubeIntent(int position) {
+    /**
+     * Intent to launch YouTube app based on {@link PlaylistItem} video ID.
+     *
+     * @param position Position of {@link PlaylistItem} in dataset
+     */
+    public void startYouTubeIntent(int position) {
 
-    App.showLog("========position===="+position);
-    App.showLog("========position====Symbol==="+listStocklistItemListResponse.get(position).Symbol);
+        App.showLog("========position====" + position);
+        App.showLog("========position====Symbol===" + listStocklistItemListResponse.get(position).Symbol);
 
-    Intent intent = new Intent(mView,StockDetailActivity.class);
-    intent.putExtra(App.tagStocklistItemListResponse , listStocklistItemListResponse.get(position));
-    mView.startActivity(intent);
+        Intent intent = new Intent(mView, StockDetailActivity.class);
+        intent.putExtra(App.tagStocklistItemListResponse, listStocklistItemListResponse.get(position));
+        mView.startActivity(intent);
 
 
     /* Intent intent = new Intent(Intent.ACTION_VIEW,
         Uri.parse(
             INTENT_URL + listStocklistItemListResponse.get(position).getSnippet().getResourceId().getVideoId()));
     mView.startActivity(intent);*/
-  }
+    }
 
     public void loadPlaylistItems() {
         loadPlaylistItems(input);

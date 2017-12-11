@@ -132,6 +132,9 @@ public class StockListActivity extends AppCompatActivity {
   protected void onResume() {
     super.onResume();
     HideKey.initialize(this);
+    if (mPresenter !=null && mAdapter != null && mAdapter.getItemCount() > 0) {
+      mPresenter.loadPlaylistItems(strInput);
+    }
   }
 
   @Override
@@ -171,6 +174,7 @@ public class StockListActivity extends AppCompatActivity {
    * @param adapter supplied from presenter
    */
   public void swapAdapter(Adapter adapter) {
+    mAdapter = adapter;
     mRecyclerView.swapAdapter(adapter, false);
     if(adapter !=null && adapter.getItemCount() > 0)
     {

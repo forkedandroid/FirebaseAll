@@ -3,6 +3,7 @@ package com.stockapp.view;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stockapp.App;
 import com.stockapp.R;
@@ -25,6 +27,7 @@ import com.utils.HideKey;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class FavoriteStockListActivity extends AppCompatActivity {
 
@@ -55,6 +58,8 @@ public class FavoriteStockListActivity extends AppCompatActivity {
   SearchView searchView;
   String strInput = "a";
 
+  Realm realm;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -70,17 +75,28 @@ public class FavoriteStockListActivity extends AppCompatActivity {
       }
     });
 
-    mPresenter = new FavoriteStockListPresenter(this, App.getApiService());
+
+
+      /* // Clear the realm from last time
+            Realm.deleteRealm(realmConfiguration);
+*/
+            /*RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                    .encryptionKey(App.getEncryptRawKey())
+                    .build();
+*/
+    //realm = Realm.getInstance(realmConfiguration);
+    realm = Realm.getInstance(App.getRealmConfiguration());
+    mPresenter = new FavoriteStockListPresenter(this, App.getApiService(),realm);
 
     mRecyclerView.setLayoutManager(
         new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     mRecyclerView.setAdapter(mAdapter);
-    mRecyclerView.addOnItemTouchListener(
+  /*  mRecyclerView.addOnItemTouchListener(
         new RecyclerItemClickListener(this, mRecyclerView,
             (View view, int position) ->
                 mPresenter.startYouTubeIntent(position)
         )
-    );
+    );*/
     mPresenter.loadPlaylistItems(strInput);
     mSwipeRefreshLayout.setOnRefreshListener(mPresenter::loadPlaylistItems);
 
@@ -93,12 +109,23 @@ public class FavoriteStockListActivity extends AppCompatActivity {
 
       }
     });
+
+    fabSearch.setImageResource(R.drawable.ic_add_white_24dp);
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    HideKey.initialize(this);
+    try {
+      HideKey.initialize(this);
+      if (mPresenter !=null && mAdapter != null && mAdapter.getItemCount() > 0) {
+        mPresenter.loadPlaylistItems(strInput);
+      }
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
 
  /* @Override
@@ -138,6 +165,7 @@ public class FavoriteStockListActivity extends AppCompatActivity {
    * @param adapter supplied from presenter
    */
   public void swapAdapter(Adapter adapter) {
+    mAdapter = adapter;
     mRecyclerView.swapAdapter(adapter, false);
     if(adapter !=null && adapter.getItemCount() > 0)
     {
@@ -153,5 +181,27 @@ public class FavoriteStockListActivity extends AppCompatActivity {
   protected void onStop() {
     super.onStop();
 
+  }
+
+
+  boolean doubleBackToExitPressedOnce = false;
+
+  @Override
+  public void onBackPressed() {
+    if (doubleBackToExitPressedOnce) {
+      super.onBackPressed();
+      return;
+    }
+
+    this.doubleBackToExitPressedOnce = true;
+    Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+    new Handler().postDelayed(new Runnable() {
+
+      @Override
+      public void run() {
+        doubleBackToExitPressedOnce=false;
+      }
+    }, 2000);
   }
 }

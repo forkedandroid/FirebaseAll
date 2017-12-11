@@ -36,7 +36,7 @@ public class StockListPresenter {
     mYouTubeService = youTubeService;
     listStocklistItemListResponse = new ArrayList<>();
 
-    mAdapter = new StockListAdapter(listStocklistItemListResponse,realm);
+    mAdapter = new StockListAdapter(activity,listStocklistItemListResponse,realm);
 
 
 

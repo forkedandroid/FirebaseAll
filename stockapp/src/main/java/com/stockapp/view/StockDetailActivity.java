@@ -3,6 +3,7 @@ package com.stockapp.view;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.stockapp.App;
@@ -23,12 +25,14 @@ import com.stockapp.adapter.SlidingImageAdapter;
 import com.stockapp.model.StockDetailResponse;
 import com.stockapp.model.StocklistItemListResponse;
 import com.stockapp.presenter.StockDetailPresenter;
+import com.stockapp.presenter.StockListPresenter;
 import com.utils.HideKey;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class StockDetailActivity extends AppCompatActivity {
 
@@ -64,7 +68,9 @@ public class StockDetailActivity extends AppCompatActivity {
 
     SearchView searchView;
 
-    StocklistItemListResponse stocklistItemListResponse;
+    StocklistItemListResponse stocklistItemListResponse = new StocklistItemListResponse();
+
+    Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,7 @@ public class StockDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_stock_detail);
         ButterKnife.bind(this);
 
-
+        realm = Realm.getInstance(App.getRealmConfiguration());
         mPresenter = new StockDetailPresenter(this, App.getApiService());
         setSupportActionBar(toolbar);
 
@@ -102,10 +108,29 @@ public class StockDetailActivity extends AppCompatActivity {
         fabFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (searchView != null) {
+             /*   if (searchView != null) {
                     searchView.setIconifiedByDefault(true);
                     searchView.requestFocus();
-                }
+                }*/
+
+
+
+             if(stocklistItemListResponse !=null) {
+                 if (view.isSelected() == true) {
+                     App.showLog("=====fav added----Remove==");
+                     view.setSelected(false);
+                     fabFavourite.setImageResource(R.drawable.ic_star_border_black_24dp);
+                     App.removeStockSymbol(realm, stocklistItemListResponse);
+                 } else {
+                     App.showLog("=====fav not added----Add==");
+
+                     if (realm != null) {
+                         view.setSelected(true);
+                         fabFavourite.setImageResource(R.drawable.ic_star_black_24dp);
+                         App.insertStockSymbol(realm, stocklistItemListResponse);
+                     }
+                 }
+             }
             }
         });
     }
@@ -192,6 +217,20 @@ public class StockDetailActivity extends AppCompatActivity {
                     "Low - $" + stockDetailResponse.Low + "\n" +
                     "Open - $" + stockDetailResponse.Open + "\n"
             );
+
+            stocklistItemListResponse.Symbol = stockDetailResponse.Symbol;
+            stocklistItemListResponse.Exchange = "";
+
+            if(App.getCheckIsFavorite(realm,stocklistItemListResponse.Symbol,stocklistItemListResponse.Exchange) !=null  && App.getCheckIsFavorite(realm,stocklistItemListResponse.Symbol,stocklistItemListResponse.Exchange).size() > 0){
+                fabFavourite.setImageResource(R.drawable.ic_star_black_24dp);
+                fabFavourite.setSelected(true);
+            }
+            else
+            {
+                fabFavourite.setImageResource(R.drawable.ic_star_border_black_24dp);
+                fabFavourite.setSelected(false);
+            }
+
         } else {
             viewPager.setVisibility(View.GONE);
             tvName.setText("No data found.");
@@ -213,4 +252,6 @@ public class StockDetailActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
     }
+
+
 }
