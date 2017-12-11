@@ -1,3 +1,37 @@
+
+
+Keystore details
+
+-----------------------------
+name - keystore_stockapp.jks
+alias - stockapp
+password - 123465789
+
+---------------------------------------------
+ applicationId "com.stockapp"
+ minSdkVersion 15
+ targetSdkVersion 27
+ versionCode 1
+ versionName "1.0"
+------------------------------------------------
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+---------------------------------------
+Other details
+-----------------------------------------
+
+
+
+
 http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input=goog
 
 op=
