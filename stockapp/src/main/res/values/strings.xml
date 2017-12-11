@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Stock app</string>
+    <string name="app_name">Stock exchange</string>
     <string name="current_version_">Version 1.0</string>
 
     <string name="action_settings">Settings</string>

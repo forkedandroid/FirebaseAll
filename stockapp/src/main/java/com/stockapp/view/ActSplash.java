@@ -31,7 +31,7 @@ public class ActSplash extends Activity
     @BindView(R.id.progressBar2)
     ProgressBar progressBar2;
 
-    boolean checkExpire = true;
+    boolean checkExpire = false;
     String strExpDate = "2017-12-29";
 
     @Override
@@ -85,12 +85,12 @@ public class ActSplash extends Activity
 
              //   App.showLog("===date=="+date);
 
-                if(isDateBefore(date,strExpDate) == true){
+               /* if(isDateBefore(date,strExpDate) == true){
                     checkExpire = true;
                 }
                 else {
                     checkExpire = false;
-                }
+                }*/
 
 
                 if(checkExpire == true)
